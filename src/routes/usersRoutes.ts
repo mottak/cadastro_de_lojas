@@ -8,6 +8,8 @@ const usersRouter = Router();
 
 usersRouter.get('/users',userController.list);
 usersRouter.post('/user', usermiddleware.validNewUser, userController.create);
+usersRouter.put('/user/:id', usermiddleware.idExists, usermiddleware.validEditeUser, userController.edit);
+usersRouter.delete('/user/:id', usermiddleware.idExists, userController.remove);
 
 
 export default usersRouter;

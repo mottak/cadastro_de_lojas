@@ -12,3 +12,9 @@ export const userSchema = Joi.object({
     .min(6)
     .required(),
 })
+
+export const editUserSchema = Joi.object({
+  name: Joi.string()
+    .min(3).required(),
+
+})
