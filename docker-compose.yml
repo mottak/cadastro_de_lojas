@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    container_name: postgres_cadastro_lojas
+    # dockerfile: .
+
+    environment:
+      - POSTGRES_USER=kissyla
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=kissyla
+    ports:
+      - "5432:5432"    
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+    postgres:
+
