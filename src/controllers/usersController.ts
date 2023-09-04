@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import userService from '../services/userService'
+import { userSchema } from '../validators/user';
 
 
 const list = async (req: Request, res: Response) => {
@@ -11,6 +12,20 @@ const list = async (req: Request, res: Response) => {
 }
 
 const create = async (req: Request, res: Response) => {
+  // try {
+   
+    const newUser = await userService.create(req.body)
+    return res.status(201).json(newUser)
+
+  // } catch (err) {
+  //   console.log('entrei no catch')
+  //   console.log('eroooo -----', err)
+  //   throw err
+  // }
+ 
+
+
+
 
   
 }
