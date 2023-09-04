@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_cadastro_lojas
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: lojas
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
