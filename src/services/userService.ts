@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import { NewUser, User } from '../domain/user'
+import { Prisma, PrismaClient } from '@prisma/client'
+import { NewUser, User, UserWithPassword } from '../domain/user'
 import { CustomError } from '../Error/CustomError'
 
 const prisma = new PrismaClient()
@@ -29,31 +29,36 @@ const create = async (newUser: NewUser): Promise<User> => {
 
   
 }
+
+const findOne = async (id: number): Promise<UserWithPassword | null> => {
+  const user = await prisma.user.findUnique({ where: { id }})
+  return user
+}
+
 const edit = async (id: number, name: string ) => {
-  const result = await prisma.user.update({
+
+    const result = await prisma.user.update
+    ({
+      where: { id },
+      data: {
+        name
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true
+      }
+    })
+    console.log('inicio service')
+    return result
+   
+
+}
+
+const remove = async (id: number) => {
+  await prisma.user.delete({
     where: { id },
-    data: {
-      name
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true
-    }
   })
-
-  if (!result) {
-    throw new CustomError('User not found', 404)
-
-  }
-  return result
-
-  
 }
 
-const remove = async () => {
-
-  
-}
-
-export default  { list, create, edit, remove };
+export default  { list, create, findOne, edit, remove };
