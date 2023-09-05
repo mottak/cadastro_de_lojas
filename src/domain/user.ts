@@ -11,4 +11,4 @@ export type UserWithPassword = User & {
 
 export type NewUser = Omit<UserWithPassword, 'id'>
 
-export type UserLogin = Pick<UserWithPassword, 'email' | 'password' | 'salt'>
+// export type UserLogin = Pick<UserWithPassword, 'email' | 'password' | 'salt'>

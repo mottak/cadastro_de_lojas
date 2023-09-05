@@ -1,7 +1,9 @@
 export type Store = {
   id: number;
   name: string;
-  url: string;
-  logo: string;
+  urlLogo: string;
   address: string;
+  ownerId: number
 }
+
+export type NewStore = Omit<Store, 'id'>
