@@ -118,14 +118,13 @@ const remove = async (id: number): Promise<void> => {
 }
 }
 
-const login = async (email: string, password: string): Promise<boolean> => {
+const login = async (email: string, password: string): Promise<UserWithPassword> => {
   const user = await prisma.user.findUnique({ where: { email }})
   if(!user) {
     throw new CustomError('Email not found.', 404)
 
   }
-  const isLoginValid = crypto.verifycryptoPassword(password, user.password, user.salt)
-  return isLoginValid
+  return user
 
 
 }

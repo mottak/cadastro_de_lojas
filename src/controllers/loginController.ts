@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
 import userService from '../services/userService'
+import { createToken } from '../validators/jwt/createToken';
+import crypto from '../helper/cryptoPrassword'
 
 const login = async (req: Request, res: Response) => {
 
   const { email, password } = req.body;
 
   const user = await userService.login(email, password)
-  if(user) {
-    return res.status(200).json({ message: 'Sucessfully logged in.'})
+  const isLoginValid = crypto.verifycryptoPassword(password, user.password, user.salt)
+  if(isLoginValid) {
+    const acessToken = createToken({id: user.id, name: user.name, email: user.email})
+    return res.status(200).json({ acessToken })
   }
 
-  return res.status(404).json({ message: 'Inavlid password.'})
+  return res.status(404).json({ message: 'Invalid password.'})
 
 }
 
