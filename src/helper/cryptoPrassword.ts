@@ -1,26 +1,25 @@
-import crypto from 'crypto'
+import bcrypt from 'bcrypt'
+import { CustomError } from '../Error/CustomError'
 
-const salt = crypto.randomBytes(16).toString('hex'); // Em uma aplicação não ficaria exposto e sim nas variaveis de ambiente
+const salt = 10
 
-type DbPassword = {
-  hash: string,
-  salt: string
+const cryptoPassword = async(password: string) => {
+  try {
+    const hash = await bcrypt.hash(password, salt)
+    return  hash as string
+
+  } catch (e) {
+    throw new CustomError('Something went wrong.', 400)
+  }
+
+
 }
 
-const cryptoPassword = (password: string): DbPassword => {
-  const hash = crypto
-  .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
-  .toString('hex');
-return { hash, salt };
+const decryptoPassword = async (insertedPassword: string, hashPassword: string): Promise<boolean> => {
+  const match = await bcrypt.compare(insertedPassword, hashPassword)
+
+  return match
 }
 
-const verifycryptoPassword = (insertedPassword: string, hashPassword: string, salt: string): boolean => {
-  const hashSenhaInserida = crypto
-  .pbkdf2Sync(insertedPassword, salt, 1000, 64, 'sha512')
-  .toString('hex');
-
-  return hashSenhaInserida === hashPassword;
-}
-
-export default { cryptoPassword, verifycryptoPassword
+export default { cryptoPassword, decryptoPassword
 }

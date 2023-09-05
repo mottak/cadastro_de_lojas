@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import userService from '../services/userService'
+import * as userService from '../services/userService'
 import { createToken } from '../validators/jwt/createToken';
 import crypto from '../helper/cryptoPrassword'
 
@@ -8,7 +8,7 @@ const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const user = await userService.login(email, password)
-  const isLoginValid = crypto.verifycryptoPassword(password, user.password, user.salt)
+  const isLoginValid = await crypto.decryptoPassword(password, user.password)
   if(isLoginValid) {
     const acessToken = createToken({id: user.id, name: user.name, email: user.email})
     return res.status(200).json({ acessToken })

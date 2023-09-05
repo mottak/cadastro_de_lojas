@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import storesService from '../services/storesService'
-import userService from '../services/userService'
+import * as userService from '../services/userService'
 
 const list = async (req: Request, res: Response) => {
 

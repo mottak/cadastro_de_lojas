@@ -7,7 +7,13 @@ const prisma = new PrismaClient()
 
 const list = async () => {
 
-  const users = await prisma.user.findMany()
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true
+    }
+  })
   return users;
   
 }
@@ -16,14 +22,13 @@ const list = async () => {
 const create = async (newUser: NewUser): Promise<User> => {
   const  { name, email, password } = newUser
 
-  const { hash, salt } = crypto.cryptoPassword(password)
+  const hash = await crypto.cryptoPassword(password)
 
   const result = await prisma.user.create({
     data: {
       name,
       email,
       password: hash,
-      salt,
     },
   })
 
@@ -87,13 +92,12 @@ const editEmail = async (id: number, email: string ):Promise<User> => {
 
 const editPassword = async (id: number, password: string ): Promise<void> => {
   try {
-    const { hash, salt } = crypto.cryptoPassword(password)
+    const hash = await crypto.cryptoPassword(password)
     await prisma.user.update
     ({
       where: { id },
       data: {
         password: hash,
-        salt
       },
       select: {
         id: true,
@@ -129,4 +133,5 @@ const login = async (email: string, password: string): Promise<UserWithPassword>
 
 }
 
-export default  { list, create, findOne, editName, editEmail, editPassword, remove, login };
+export  { list, create, findOne, editName, editEmail, editPassword, remove, login };
+
