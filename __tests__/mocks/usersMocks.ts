@@ -22,7 +22,9 @@ export const newUser = {
   "email": "maria@email.com"
 }
 
-export const editNameUser = {
+export const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6Ik1hcmlhIiwiZW1haWwiOiJtYXJpYUBlbWFpbC5jb20iLCJpYXQiOjE2OTM5NDgyOTR9.hkjWKH-5scMAlHQj9G2jLF61dDHXcm9i4LqddGKaWwg'
+
+export const editUser = {
   "id": 1,
   "name": "Maria de Lourdes",
   "email": "maria@email.com"
