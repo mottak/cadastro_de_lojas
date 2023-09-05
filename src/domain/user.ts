@@ -5,9 +5,10 @@ export type User = {
 }
 
 export type UserWithPassword = User & {
-  password: string
+  password: string,
+  salt: string,
 }
 
 export type NewUser = Omit<UserWithPassword, 'id'>
 
-export type UserLogin = Pick<UserWithPassword, 'email' | 'password'>
+export type UserLogin = Pick<UserWithPassword, 'email' | 'password' | 'salt'>

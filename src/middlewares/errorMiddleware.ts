@@ -8,7 +8,7 @@ type CustomErr = {
 
 export const errorMiddleware = (err: Error | CustomErr | CustomError, _req: Request, res: Response, _next: NextFunction) => {
   // console.log(err)
-  if(err instanceof CustomError) {    
+  if(err instanceof CustomError) {
     res.status(err.status).json({ message: err.message })
     
     return
