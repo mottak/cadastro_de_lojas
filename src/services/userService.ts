@@ -41,30 +41,73 @@ const findOne = async (id: number): Promise<UserWithPassword | null> => {
   return user
 }
 
-const edit = async (id: number, name: string ) => {
-try {
+const editName = async (id: number, name: string ):Promise<User> => {
+  try {
 
-  const result = await prisma.user.update
-  ({
-    where: { id },
-    data: {
-      name
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true
-    }
-  })
-  return result
-} catch (err) {
-  throw new CustomError('Provid a valid id.', 404)
+    const result = await prisma.user.update
+    ({
+      where: { id },
+      data: {
+        name
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true
+      }
+    })
+    return result
+  } catch (err) {
+    throw new CustomError('Provid a valid id.', 404)
+  }
+
 }
-   
+
+const editEmail = async (id: number, email: string ):Promise<User> => {
+  try {
+
+    const result = await prisma.user.update
+    ({
+      where: { id },
+      data: {
+        email
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true
+      }
+    })
+    return result
+  } catch (err) {
+    throw new CustomError('Provid a valid id.', 404)
+  }
 
 }
 
-const remove = async (id: number) => {
+const editPassword = async (id: number, password: string ): Promise<void> => {
+  try {
+    const { hash, salt } = crypto.cryptoPassword(password)
+    await prisma.user.update
+    ({
+      where: { id },
+      data: {
+        password: hash,
+        salt
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true
+      }
+    })
+  } catch (err) {
+    throw new CustomError('Provid a valid id.', 404)
+  }
+
+}
+
+const remove = async (id: number): Promise<void> => {
   try {
     await prisma.user.delete({
       where: { id },
@@ -87,4 +130,4 @@ const login = async (email: string, password: string): Promise<boolean> => {
 
 }
 
-export default  { list, create, findOne, edit, remove, login };
+export default  { list, create, findOne, editName, editEmail, editPassword, remove, login };

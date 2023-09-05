@@ -15,10 +15,25 @@ const create = async (req: Request, res: Response) => {
 
 }
 
-const edit = async (req: Request, res: Response) => {
+const editName = async (req: Request, res: Response) => {
   const { id } = req.params
-  const editedUser = await userService.edit(parseInt(id), req.body.name)
+
+  const editedUser = await userService.editName(parseInt(id), req.body.name)
   return res.status(200).json(editedUser)  
+
+}
+const editEmail = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  const editedUser = await userService.editEmail(parseInt(id), req.body.email)
+  return res.status(200).json(editedUser)  
+
+}
+const editPassword = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+ await userService.editPassword(parseInt(id), req.body.password)
+  return res.status(200).json({ message: 'Password successfully changed.'})  
 
 }
 
@@ -29,4 +44,4 @@ const remove = async (req: Request, res: Response) => {
 
 }
 
-export default  { list, create, edit, remove };
+export default  { list, create, editName, editEmail, editPassword, remove };
