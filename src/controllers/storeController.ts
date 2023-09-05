@@ -25,5 +25,14 @@ const create = async (req: Request, res: Response) => {
 
 }
 
+const remove = async (req: Request, res: Response) => {
+  const { id } = req.params
 
-export default  { list, create };
+   await storesService.remove(parseInt(id))
+
+  return res.status(204).send()
+  
+}
+
+
+export default  { list, create, remove };

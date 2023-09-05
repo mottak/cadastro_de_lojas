@@ -9,7 +9,7 @@ const storesRouter = Router();
 storesRouter.get('/stores', storeController.list);
 storesRouter.post('/store', storeMiddleware.validNewStore, storeController.create);
 
-// storesRouter.delete('/store/:id', storeController.remove);
+storesRouter.delete('/store/:id', storeController.remove);
 
 
 export default storesRouter;

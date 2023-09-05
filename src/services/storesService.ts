@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { Store, NewStore } from '../domain/store'
-// import { CustomError } from '../Error/CustomError'
+import { CustomError } from '../Error/CustomError'
 
 const prisma = new PrismaClient()
 
@@ -86,27 +86,16 @@ const create = async (newStore: NewStore): Promise<Store> => {
 // }
 
 
-// const remove = async (id: number): Promise<void> => {
-//   try {
-//     await prisma.user.delete({
-//       where: { id },
-//     })
+const remove = async (id: number): Promise<void> => {
+  try {
+    await prisma.store.delete({
+      where: { id },
+    })
 
-//   } catch (err) {
-//     throw new CustomError('Provid a valid id.', 404)
-// }
-// }
-
-// const login = async (email: string, password: string): Promise<boolean> => {
-//   const user = await prisma.user.findUnique({ where: { email }})
-//   if(!user) {
-//     throw new CustomError('Email not found.', 404)
-
-//   }
-//   const isLoginValid = crypto.verifycryptoPassword(password, user.password, user.salt)
-//   return isLoginValid
+  } catch (err) {
+    throw new CustomError('Provid a valid id.', 404)
+}
+}
 
 
-// }
-
-export default  { list, create };
+export default  { list, create, remove };
