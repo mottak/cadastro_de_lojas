@@ -27,7 +27,3 @@ model Store {
   ownerId Int
 
 }
-
-
-
-

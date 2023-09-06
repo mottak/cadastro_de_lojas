@@ -14,7 +14,7 @@ export const errorMiddleware = (err: Error | CustomErr | CustomError, _req: Requ
     return
   }
   if(err instanceof Error) {
-      // console.error(err)
+      console.error(err)
       
       res.status(500).json({ message: 'Internal server error.' })
       

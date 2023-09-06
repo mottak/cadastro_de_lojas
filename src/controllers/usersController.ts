@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 import * as userService from '../services/userService'
 
 const list = async (req: Request, res: Response) => {
+  
+  const page = Number(req?.query?.page) || 1
+  const limit = Number(req?.query?.limit) || 20
+  const search = req?.query?.search as string || ''
 
-  const users = await userService.list()
+  const users = await userService.list(page, limit, search)
   
   return res.status(200).json(users)
   

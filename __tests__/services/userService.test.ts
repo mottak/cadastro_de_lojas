@@ -1,5 +1,5 @@
 import * as userService from '../../src/services/userService';
-import {  allUsers, createnewUser, loginBody, newUser, validLoginUser } from '../mocks/usersMocks';
+import {  allUsers, createnewUser, loginBody, newUser, userSerachTerm, validLoginUser } from '../mocks/usersMocks';
 import { assert, expect } from 'chai'
 import sinon from 'sinon'
 import crypto from '../../src/helper/cryptoPrassword'
@@ -17,8 +17,16 @@ describe('UserService', () => {
     
       stubInstance = prisma.user.findMany = sinon.stub().resolves(allUsers)
      
-      const result = await userService.list()
+      const result = await userService.list(1, 20, '')
       expect(result).to.deep.equal(allUsers)
+    })
+
+    it('Successfully list users filtered by searchTerm', async() => {
+    
+      stubInstance = prisma.user.findMany = sinon.stub().resolves(userSerachTerm)
+     
+      const result = await userService.list(1, 20, 'ria')
+      expect(result).to.deep.equal(userSerachTerm)
     })
 
     it('Successfully list user by id', async() => {

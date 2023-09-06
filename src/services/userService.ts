@@ -5,15 +5,29 @@ import { CustomError } from '../Error/CustomError'
 
 export const prisma = new PrismaClient()
 
-const list = async (): Promise<User[]> => {
+const list = async (page: number, limit: number, search: string): Promise<User[]> => {
+  const validPage = page > 0 ? page - 1 : 1
+  const validLimit = limit > 0 ? limit : 20
+  const validSearch =  '%' + search.replace(/\W/g, '')
 
-  const users: User[] = await prisma.user.findMany({
+  const users = await prisma.user.findMany({
+    where: {
+      OR:
+        [
+          { name:  { startsWith: validSearch, mode: 'insensitive' } },
+          { email: { startsWith: validSearch, mode: 'insensitive' } },
+        ]
+
+    },
+    skip: validLimit * (validPage),
+    take: validLimit,
     select: {
       id: true,
       name: true,
       email: true
     }
   })
+
   return users;
   
 }

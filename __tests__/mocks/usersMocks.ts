@@ -71,4 +71,12 @@ export const loginBody = {
   password: '123456'
 }
 
+export const userSerachTerm = [
+  {
+    id: 1,
+    name: "Maria",
+    email: "maria@email.com"
+  }
+]
+
   
