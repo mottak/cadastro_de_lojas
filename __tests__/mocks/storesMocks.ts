@@ -37,3 +37,10 @@ export const createNewStore =  {
   address: "Rua das Araras, 450 Bairro Planices",
   ownerId: 2
 }
+
+export const editStore =  {
+  name: "Nova loja do bairro",
+  urlLogo: "https://www.prisma.io/nextjs",
+  address: "Rua das Araras, 450 Bairro Planices",
+}
+

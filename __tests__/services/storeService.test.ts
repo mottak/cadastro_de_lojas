@@ -44,18 +44,18 @@ describe('storeService', () => {
   
   })
 
-  // describe('Edit user', () => {
-  //   beforeEach(() => { sinon.restore(); });
+  describe('Edit store', () => {
+    beforeEach(() => { sinon.restore(); });
   
-  //   it('Successfully edit user name', async() => {
-  //     stubInstance = prisma.user.update = sinon.stub().resolves(newUser)
+    it('Successfully edit store name', async() => {
+      stubInstance = prisma.store.update = sinon.stub().resolves(newStore)
 
-  //     const result = await storeService.editName(1, createnewUser.name)
-  //     expect(result).to.deep.equal(newUser)
+      const result = await storeService.edit(1, newStore.name, newStore.urlLogo, newStore.address)
+      expect(result).to.deep.equal(newStore)
   
-  //   })
+    })
 
-  //   })
+    })
   
  
 

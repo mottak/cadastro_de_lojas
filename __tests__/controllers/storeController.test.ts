@@ -33,7 +33,7 @@ describe('list stores', () => {
   })
 
 
-describe('Create user', () => {
+describe('Create store', () => {
   afterEach(() => {
     sinon.reset()
   })
@@ -62,36 +62,38 @@ describe('Create user', () => {
 
 })
 
-// describe('Edit user', () => {
-//   afterEach(() => {
-//     sinon.reset()
-//   })
+describe('Edit store', () => {
+  afterEach(() => {
+    sinon.reset()
+  })
 
-//   it('Successfully edit user name', async() => {
-//     sinon.stub(storeService, 'editName').resolves(newUser)
+  it('Successfully edit store name', async() => {
+    sinon.stub(storeService, 'edit').resolves(newStore)
   
-//     const req = {} as Request
-//     const res = {} as Response
+    const req = {} as Request
+    const res = {} as Response
 
-//     req.params = { 
-//       id: "1"
-//     }
+    req.params = { 
+      id: "1"
+    }
   
-//     req.body = {
-//       "name": "Maria das Graças",
-//     }
-//     res.status = sinon.stub().returns(res)
-//     res.json = sinon.stub().returns(res)
+    req.body = {
+      "name": "Nova loja do bairro",
+      "urlLogo": "https://www.prisma.io/nextjs",
+      "address": "Rua das Araras, 450 Bairro Planices",
+    }
+    res.status = sinon.stub().returns(res)
+    res.json = sinon.stub().returns(res)
 
       
-//     await storeController.editName(req, res);
+    await storeController.edit(req, res);
 
-//     expect(res.status).to.have.been.calledWith(200);
-//     expect(res.json).to.have.been.calledWith(newUser)
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(newStore)
     
-//   })
+  })
 
-// })
+})
 
 describe('Remove store', () => {
   afterEach(() => {
