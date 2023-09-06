@@ -215,7 +215,7 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
 
 ### Atualizar um Usuário
 
-- **URL:** `/user/name/{id}`
+- **URL:** `/user/{id}`
 - **Método:** PUT
 - **Parâmetros de URL:**
 
@@ -223,6 +223,7 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
 - **Parâmetros de Solicitação:**
 
   - `nome` (string) - Novo nome do usuário.
+  - `email` (string) - Novo email do usuário.
  
 
 - **Autenticação Necessária:** Sim (Token JWT)
@@ -250,52 +251,6 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
       "mensagem": "Provid a valid id."
     }
     ```
-
-- **URL:** `/user/email/{id}`
-- **Método:** PUT
-- **Parâmetros de URL:**
-
-  - `id` (number) - ID do usuário a ser atualizado.
-- **Parâmetros de Solicitação:**
-
-  - `email` (string) - Novo endereço de e-mail do usuário.
- 
-
-- **Autenticação Necessária:** Sim (Token JWT)
-
-- **Resposta de Sucesso:**
-
-  - **Código de Status:** 200 OK
-  - **Corpo da Resposta:**
-
-    ```json
-     {
-        "id": 10,
-        "name": "Maria",
-        "email": "maria@email.com"
-      }
-    ```
-
-- **Resposta de Erro:**
-
-  - **Código de Status:** 404 Not Found
-  - **Corpo da Resposta:**
-
-    ```json
-    {
-      "mensagem": "Provid a valid id."
-    }
-    ```
-  
-- **URL:** `/user/password/{id}`
-- **Método:** PUT
-- **Parâmetros de URL:**
-
-  - `id` (number) - ID do usuário a ser atualizado.
-- **Parâmetros de Solicitação:**
-
-  - `password` (string) - Nova senha do usuário.
- 
 
 - **Autenticação Necessária:** Sim (Token JWT)
 
@@ -343,4 +298,106 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
       "mensagem": "Provid a valid id."
     }
     ```
+
+## Recursos de Lojas
+
+
+## Listar Lojas
+
+- **URL:** `/stores`
+- **Método:** GET
+- **Autenticação Necessária:** Não
+
+**Resposta de Sucesso:**
+
+- **Código de Status:** 200 OK
+- **Corpo da Resposta:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Loja A",
+    "urlLogo": "https://example.com/logoA.png",
+    "address": "Rua A, 123",
+    "ownerId": 1
+  },
+  {
+    "id": 2,
+    "name": "Loja B",
+    "urlLogo": "https://example.com/logoB.png",
+    "address": "Rua B, 456",
+    "ownerId": 2
+  }
+]
+```
+
+## Criar uma Loja
+**URL**: /stores
+**Método**: POST
+**Corpo da Requisição:**
+
+```json
+
+{
+  "name": "Nome da Loja",
+  "urlLogo": "https://example.com/logo.png",
+  "address": "Endereço da Loja",
+  "ownerId": 1
+}
+```
+Resposta de Sucesso:
+
+Código de Status: 201 Created
+Corpo da Resposta:
+
+```json
+{
+  "id": 3,
+  "name": "Nome da Loja",
+  "urlLogo": "https://example.com/logo.png",
+  "address": "Endereço da Loja",
+  "ownerId": 1
+}
+
+```
+
+## Atualizar uma Loja
+
+**URL**: /store/{id}
+**Método**: PUT
+
+Corpo da Requisição:
+
+```json
+
+{
+  "name": "Novo Nome da Loja",
+  "urlLogo": "https://example.com/novo-logo.png",
+  "address": "Novo Endereço da Loja"
+}
+````
+
+Resposta de Sucesso:
+
+Código de Status: 200 OK
+Corpo da Resposta:
+
+```json
+{
+  "id": 1,
+  "name": "Novo Nome da Loja",
+  "urlLogo": "https://example.com/novo-logo.png",
+  "address": "Novo Endereço da Loja",
+  "ownerId": 1
+}
+``````
+
+## Excluir uma Loja
+
+**URL**: /store/{id}
+**Método: DELETE**
+Resposta de Sucesso:
+
+Código de Status: 204 No Content
 
