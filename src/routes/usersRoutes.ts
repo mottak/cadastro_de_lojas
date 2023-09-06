@@ -7,7 +7,7 @@ import auth from '../middlewares/authmiddleware'
 
 const usersRouter = Router();
 
-usersRouter.get('/users',userController.list);
+usersRouter.get('/users', userController.list);
 usersRouter.post('/user', usermiddleware.validNewUser, userController.create);
 
 usersRouter.put('/user/name/:id', auth.authUser, usermiddleware.idExists, usermiddleware.validEditName, userController.editName);
