@@ -2,11 +2,13 @@ import { Request, Response } from 'express';
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
-import * as userService from '../src/services/userService';
-import userController from '../src/controllers/usersController'
-import { allUsers, newUser } from './mocks/usersMocks';
+import * as userService from '../../src/services/userService';
+import userController from '../../src/controllers/usersController'
+import { allUsers, newUser } from '../mocks/usersMocks';
 
 chai.use(sinonChai)
+
+describe('Users Controller', () => {
 
 describe('list users', () => {
   afterEach(() => {
@@ -154,7 +156,7 @@ describe('Remove user', () => {
   afterEach(() => {
     sinon.reset()
   })
-  it('Successfully create new user', async() => {
+  it('Successfully remove user', async() => {
     sinon.stub(userService, 'remove').resolves()
   
     const req = {} as Request
@@ -175,3 +177,4 @@ describe('Remove user', () => {
 
 })
 
+})
