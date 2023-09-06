@@ -52,24 +52,8 @@ describe('UserService', () => {
     it('Successfully edit user name', async() => {
       stubInstance = prisma.user.update = sinon.stub().resolves(newUser)
 
-      const result = await userService.editName(1, createnewUser.name)
+      const result = await userService.edit(1, newUser.name, newUser.email)
       expect(result).to.deep.equal(newUser)
-  
-    })
-
-    it('Successfully edit user email', async() => {
-      stubInstance = prisma.user.update = sinon.stub().resolves(newUser)
-
-      const result = await userService.editEmail(1, createnewUser.email)
-      expect(result).to.deep.equal(newUser)
-  
-    })
-
-    it('Successfully edit user password', async() => {
-      stubInstance = prisma.user.update = sinon.stub().resolves()
-      sinon.stub(crypto, 'cryptoPassword').resolves(validLoginUser.password)
-
-      expect(await userService.editPassword(1, createnewUser.password)).to.not.throw
   
     })
   
@@ -99,12 +83,7 @@ describe('UserService', () => {
       expect(result).to.deep.equal(validLoginUser)
   
     })
-    // it('Try to Login with a invalid email', async() => {
-    //   stubInstance = prisma.user.findUnique = sinon.stub().resolves(null)
 
-    //   const result = await userService.login('emailnaocadastrado@email.com')
-    //   expect(result).to.thrown('Email')
-    // })
   
   })
 

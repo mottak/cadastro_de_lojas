@@ -80,8 +80,8 @@ describe('Edit user', () => {
     sinon.reset()
   })
 
-  it('Successfully edit user name', async() => {
-    sinon.stub(userService, 'editName').resolves(newUser)
+  it('Successfully edit user ', async() => {
+    sinon.stub(userService, 'edit').resolves(newUser)
   
     const req = {} as Request
     const res = {} as Response
@@ -92,63 +92,19 @@ describe('Edit user', () => {
   
     req.body = {
       "name": "Maria das Graças",
+      "email": "maria@email.com"
     }
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
 
       
-    await userController.editName(req, res);
+    await userController.edit(req, res);
 
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(newUser)
     
   })
 
-  it('Successfully edit user email', async() => {
-    sinon.stub(userService, 'editEmail').resolves(newUser)
-  
-    const req = {} as Request
-    const res = {} as Response
-
-    req.params = { 
-      id: "1"
-    }
-  
-    req.body = {
-      email: "maria@email.com"
-    }
-    res.status = sinon.stub().returns(res)
-    res.json = sinon.stub().returns(res)
-
-      
-    await userController.editEmail(req, res);
-
-    expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(newUser)
-  })
-
-  it('Successfully edit user password', async() => {
-    sinon.stub(userService, 'editPassword').resolves()
-  
-    const req = {} as Request
-    const res = {} as Response
-
-    req.params = { 
-      id: "1"
-    }
-  
-    req.body = {
-      password: "123456"
-    }
-    res.status = sinon.stub().returns(res)
-    res.json = sinon.stub().returns(res)
-
-      
-    await userController.editEmail(req, res);
-
-    expect(res.status).to.have.been.calledWith(200);
-    // expect(res.json).to.have.been.calledWith({ message: 'Password successfully changed.'})
-  })
 
 })
 
