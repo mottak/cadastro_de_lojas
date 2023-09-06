@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres
-    restart: always
+    # restart: always
     container_name: postgres_cadastro_lojas
     # dockerfile: .
 

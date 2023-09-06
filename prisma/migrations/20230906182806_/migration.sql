@@ -3,6 +3,7 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -11,8 +12,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Store" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "url" VARCHAR(255) NOT NULL,
-    "logo" TEXT NOT NULL,
+    "urlLogo" VARCHAR(255) NOT NULL,
     "address" TEXT NOT NULL,
     "ownerId" INTEGER NOT NULL,
 
