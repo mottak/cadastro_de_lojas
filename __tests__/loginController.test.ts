@@ -9,7 +9,7 @@ import * as authToken from '../src/validators/jwt/createToken'
 
 chai.use(sinonChai)
 
-describe.only('User login', () => {
+describe('User login', () => {
 
   afterEach(() => {
     sinon.reset()
