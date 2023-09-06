@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { userSchema, editNameSchema, editEmailSchema, editPasswordSchema } from '../validators/user'
+import { userSchema, editUserSchema } from '../validators/user'
 
 const validNewUser = (req: Request, res: Response, next: NextFunction) => {
   const { error } = userSchema.validate(req.body)
@@ -19,8 +19,8 @@ const idExists = (req: Request, res: Response, next: NextFunction) => {
   next()
 }
 
-const validEditName = (req: Request, res: Response, next: NextFunction) => {
-  const { error } = editNameSchema.validate(req.body)
+const validEdit = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = editUserSchema.validate(req.body)
   if(error) {
     next({status: 400, message: error.message})
   }
@@ -29,24 +29,5 @@ const validEditName = (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-const validEditEmail = (req: Request, res: Response, next: NextFunction) => {
-  const { error } = editEmailSchema.validate(req.body)
-  if(error) {
-    next({status: 400, message: error.message})
-  }
- 
-  next()
 
-}
-
-const validEditPassword = (req: Request, res: Response, next: NextFunction) => {
-  const { error } = editPasswordSchema.validate(req.body)
-  if(error) {
-    next({status: 400, message: error.message})
-  }
- 
-  next()
-
-}
-
-export default { validNewUser, idExists, validEditName, validEditEmail, validEditPassword }
+export default { validNewUser, idExists, validEdit }

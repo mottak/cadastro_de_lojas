@@ -46,35 +46,14 @@ const findOne = async (id: number): Promise<UserWithPassword | null> => {
   return user
 }
 
-const editName = async (id: number, name: string ):Promise<User> => {
+const edit = async (id: number, name: string, email: string ):Promise<User> => {
   try {
 
     const result = await prisma.user.update
     ({
       where: { id },
       data: {
-        name
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true
-      }
-    })
-    return result
-  } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
-  }
-
-}
-
-const editEmail = async (id: number, email: string ):Promise<User> => {
-  try {
-
-    const result = await prisma.user.update
-    ({
-      where: { id },
-      data: {
+        name,
         email
       },
       select: {
@@ -84,27 +63,6 @@ const editEmail = async (id: number, email: string ):Promise<User> => {
       }
     })
     return result
-  } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
-  }
-
-}
-
-const editPassword = async (id: number, password: string ): Promise<void> => {
-  try {
-    const hash = await crypto.cryptoPassword(password)
-    await prisma.user.update
-    ({
-      where: { id },
-      data: {
-        password: hash,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true
-      }
-    })
   } catch (err) {
     throw new CustomError('Provid a valid id.', 404)
   }
@@ -122,7 +80,7 @@ const remove = async (id: number): Promise<void> => {
 }
 }
 
-const login = async (email: string, password: string): Promise<UserWithPassword> => {
+const login = async (email: string): Promise<UserWithPassword> => {
   const user = await prisma.user.findUnique({ where: { email }})
   if(!user) {
     throw new CustomError('Email not found.', 404)
@@ -133,5 +91,5 @@ const login = async (email: string, password: string): Promise<UserWithPassword>
 
 }
 
-export  { list, create, findOne, editName, editEmail, editPassword, remove, login };
+export  { list, create, findOne, edit, remove, login };
 

@@ -13,19 +13,10 @@ export const userSchema = Joi.object({
     .required(),
 })
 
-export const editNameSchema = Joi.object({
+export const editUserSchema = Joi.object({
   name: Joi.string()
     .min(3).required(),
-
-})
-export const editEmailSchema = Joi.object({
   email: Joi.string()
     .email().required(),
-
-})
-
-export const editPasswordSchema = Joi.object({
-  password: Joi.string()
-    .min(6).required(),
 
 })
