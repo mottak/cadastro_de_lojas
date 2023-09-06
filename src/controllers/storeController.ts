@@ -3,22 +3,15 @@ import * as storesService from '../services/storesService'
 import * as userService from '../services/userService'
 
 const list = async (req: Request, res: Response) => {
+  const page = Number(req?.query?.page) || 1
+  const limit = Number(req?.query?.limit) || 20
+  const search = req?.query?.search as string || ''
 
-  const stores = await storesService.list()
+  const stores = await storesService.list(page, limit, search)
 
   return res.status(200).json(stores)
   
 }
-
-// const filter = async (req: Request, res: Response) => {
-
-//   const { id, name, email, limit, page } = req.params
-
-//   const stores = await storesService.filter(parseInt(id), name, email, parseInt(limit), parseInt(page))
-
-//   return res.status(200).json(stores)
-  
-// }
 
 const create = async (req: Request, res: Response) => {
 

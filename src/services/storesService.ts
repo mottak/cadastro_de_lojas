@@ -1,11 +1,29 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { Store, NewStore } from '../domain/store'
 import { CustomError } from '../Error/CustomError'
 
 export const prisma = new PrismaClient()
 
-const list = async () => {
-  const stores = await prisma.store.findMany()
+const list = async (page: number, limit: number, search: string) => {
+  const validPage = page > 0 ? page - 1 : 1
+  const validLimit = limit > 0 ? limit : 20
+  const validSearch =  '%' + search.replace(/\W/g, '') 
+  console.log({
+    limit, page, validPage, validLimit, validSearch
+  })
+  const stores = await prisma.store.findMany({
+    where: {
+      OR:
+        [
+          { name:  { startsWith: validSearch, mode: 'insensitive' } },
+          { address: { startsWith: validSearch, mode: 'insensitive' } },
+          { urlLogo: { startsWith: validSearch, mode: 'insensitive' } },
+        ]
+
+    },
+    skip: validLimit * (validPage),
+    take: validLimit
+  })
   return stores;
 }
 

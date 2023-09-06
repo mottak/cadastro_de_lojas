@@ -30,6 +30,21 @@ describe('list stores', () => {
     expect(res.json).to.have.been.calledWith(allStores)
   })
 
+  // it('List all stores', async() => {
+
+  //   sinon.stub(storeService, 'list').resolves(allStores)
+  
+  //   const req = {} as Request
+  //   const res = {} as Response
+  
+  //   res.status = sinon.stub().returns(res)
+  //   res.json = sinon.stub().returns(res)
+
+  //   await storeController.list(req, res)
+  //   expect(res.status).to.have.been.calledWith(200)
+  //   expect(res.json).to.have.been.calledWith(allStores)
+  // })
+
   })
 
 

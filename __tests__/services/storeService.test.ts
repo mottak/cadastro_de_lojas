@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import crypto from '../../src/helper/cryptoPrassword'
 
 import { prisma } from '../../src/services/storesService'
-import { allStores, createNewStore, newStore } from '../mocks/storesMocks';
+import { allStores, createNewStore, newStore, storeSearchTerm } from '../mocks/storesMocks';
 
 describe('storeService', () => {
 
@@ -17,9 +17,20 @@ describe('storeService', () => {
     
       stubInstance = prisma.store.findMany = sinon.stub().resolves(allStores)
      
-      const result = await storeService.list()
+      const result = await storeService.list(1, 20, '')
       expect(result).to.deep.equal(allStores)
     })
+
+    it('Successfully list users filtered by searchTerm', async() => {
+    
+      stubInstance = prisma.store.findMany = sinon.stub().resolves(storeSearchTerm)
+     
+      const result = await storeService.list(1, 20, 'ria')
+      expect(result).to.deep.equal(storeSearchTerm)
+    })
+
+
+    
 
     it('Successfully list store by id', async() => {
     
