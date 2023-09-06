@@ -1,13 +1,13 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { NewUser, User, UserWithPassword } from '../domain/user'
 import crypto from '../helper/cryptoPrassword'
 import { CustomError } from '../Error/CustomError'
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
-const list = async () => {
+const list = async (): Promise<User[]> => {
 
-  const users = await prisma.user.findMany({
+  const users: User[] = await prisma.user.findMany({
     select: {
       id: true,
       name: true,

@@ -4,7 +4,7 @@ import * as userService from '../services/userService'
 const list = async (req: Request, res: Response) => {
 
   const users = await userService.list()
-
+  
   return res.status(200).json(users)
   
 }
@@ -40,7 +40,7 @@ const editPassword = async (req: Request, res: Response) => {
 const remove = async (req: Request, res: Response) => {
   const { id } = req.params
   await userService.remove(parseInt(id))
-  return res.status(204).send()
+  return res.status(204).json()
 
 }
 
