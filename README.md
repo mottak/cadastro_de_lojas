@@ -36,11 +36,28 @@ Gere as migrates do prisma:
 npm run db:migrate
 ```
 
-Popule o banco de dados com as seeds disponiveis no projeto:
+Popule o banco de dados com as seeds disponíveis no projeto:
 
 ```bash
 npm run db:seed
 ```
+
+### Testes
+
+O projeto possui testes unitários que foram construídos com mocha e chai.
+Para executar os testes, rode o script:
+
+```bash
+npm test
+```
+
+Para verificar a cobertura de testes:
+
+```bash
+npm run test:coverage
+```
+
+
 
 
 
