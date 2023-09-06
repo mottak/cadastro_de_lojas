@@ -333,7 +333,7 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
 ```
 
 ## Criar uma Loja
-**URL**: /stores
+**URL**: `/store`
 **Método**: POST
 **Corpo da Requisição:**
 
@@ -364,7 +364,7 @@ Corpo da Resposta:
 
 ## Atualizar uma Loja
 
-**URL**: /store/{id}
+**URL**: `/store/{id}`
 **Método**: PUT
 
 Corpo da Requisição:
@@ -391,11 +391,11 @@ Corpo da Resposta:
   "address": "Novo Endereço da Loja",
   "ownerId": 1
 }
-``````
+```
 
 ## Excluir uma Loja
 
-**URL**: /store/{id}
+**URL**: `/store/{id}`
 **Método: DELETE**
 Resposta de Sucesso:
 
