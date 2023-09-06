@@ -13,3 +13,15 @@ export const storeSchema = Joi.object({
     .required(),
   ownerId: Joi.number().integer().required()
 })
+
+export const editStoreSchema = Joi.object({
+  name: Joi.string()
+    .min(3)
+    .required(),
+  urlLogo: Joi.string()
+    .min(10)
+    .required(),
+  address: Joi.string()
+    .min(6)
+    .required(),
+})

@@ -7,7 +7,7 @@ const login = async (req: Request, res: Response) => {
 
   const { email, password } = req.body;
 
-  const user = await userService.login(email, password)
+  const user = await userService.login(email)
   const isLoginValid = await crypto.decryptoPassword(password, user.password)
   if(isLoginValid) {
     const acessToken = createToken({id: user.id, name: user.name, email: user.email})
