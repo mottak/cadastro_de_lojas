@@ -8,9 +8,7 @@ const list = async (page: number, limit: number, search: string) => {
   const validPage = page > 0 ? page - 1 : 1
   const validLimit = limit > 0 ? limit : 20
   const validSearch =  '%' + search.replace(/\W/g, '') 
-  console.log({
-    limit, page, validPage, validLimit, validSearch
-  })
+
   const stores = await prisma.store.findMany({
     where: {
       OR:

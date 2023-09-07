@@ -29,10 +29,11 @@ const edit = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = res.locals.user 
 
-  const ownerId = await userService.findOne(req.body.ownerId);
+  const ownerId = await userService.findOne(user.id);
 
-  if (ownerId?.id !== user.id) {
-    throw new CustomError('You must be a owner to edit this store.', 401)
+
+  if (!user.id) {
+    throw new CustomError('You must login to edit this store.', 401)
   }
 
   const editedStore = await storesService.edit(Number(id), name, urlLogo, address)
@@ -44,9 +45,8 @@ const remove = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = res.locals.user
 
-  const ownerId = await userService.findOne(req.body.ownerId);
   
-  if (ownerId?.id !== user.id) {
+  if (!user.id) {
     throw new CustomError('You must be a owner to delete this store.', 401)
   }
 
