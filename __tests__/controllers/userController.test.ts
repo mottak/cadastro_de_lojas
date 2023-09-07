@@ -4,7 +4,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
 import * as userService from '../../src/services/userService';
 import userController from '../../src/controllers/usersController'
-import { allUsers, newUser } from '../mocks/usersMocks';
+import { allUsers, newUser, userSerachTerm } from '../mocks/usersMocks';
 
 chai.use(sinonChai)
 
@@ -30,21 +30,6 @@ describe('list users', () => {
     expect(res.json).to.have.been.calledWith(allUsers)
   })
 
-
-
-    // it('The users` list is empty', async() => {
-    //   sinon.stub(userService, 'list').resolves([])
-  
-    //   const req = {} as Request
-    //   const res = {} as Response
-    
-    //   res.status = sinon.stub().returns(res)
-    //   res.json = sinon.stub().returns(res)
-  
-    //   await userController.list(req, res)
-    //   expect(res.status).to.have.been.calledWith(200)
-    //   expect(res.json).to.have.been.calledWith()
-    // })
   })
 
 
@@ -121,10 +106,10 @@ describe('Remove user', () => {
     req.params = { 
       id: "1"
     }
-  
+    res.locals = { user: newUser }
+    
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
-
       
     await userController.remove(req, res);
 

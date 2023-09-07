@@ -90,6 +90,7 @@ const remove = async (id: number): Promise<void> => {
     })
 
   } catch (err) {
+    console.log(err)
     throw new CustomError('Provid a valid id.', 404)
 }
 }

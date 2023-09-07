@@ -67,7 +67,6 @@ export const validLoginUser = {
 export const loginBody = {
 
   email: 'maria@email.com',
-
   password: '123456'
 }
 
