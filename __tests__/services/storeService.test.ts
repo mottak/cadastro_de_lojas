@@ -61,7 +61,7 @@ describe('storeService', () => {
     it('Successfully edit store name', async() => {
       stubInstance = prisma.store.update = sinon.stub().resolves(newStore)
 
-      const result = await storeService.edit(1, newStore.name, newStore.urlLogo, newStore.address)
+      const result = await storeService.edit(1, newStore.name, newStore.urlLogo, newStore.address, 2)
       expect(result).to.deep.equal(newStore)
   
     })
