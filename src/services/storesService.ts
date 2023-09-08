@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { Store, NewStore } from '../domain/store'
 import { CustomError } from '../Error/CustomError'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 export const prisma = new PrismaClient()
 
@@ -29,21 +30,6 @@ const findOne = async (id: number): Promise<Store | null> => {
   const store = await prisma.store.findUnique({ where: { id }})
   return store
 }
-
-// const filter = async (id: number, email: string, name: string, limit: number = 20, page: number = 1) => {
-
-//   const stores = await prisma.store.findMany({
-//     where: {
-//       id,
-//       name,
-//     },
-//     skip: (page -1) * limit,
-//     take: limit,
-//   })
-//   return stores;
-  
-// }
-
 
 const create = async (newStore: NewStore): Promise<Store> => {
   const  { name, urlLogo, address, ownerId } = newStore
@@ -97,14 +83,20 @@ const edit = async (id: number, name: string, urlLogo: string, address: string )
 }
 
 
-const remove = async (id: number): Promise<void> => {
+const remove = async (id: number, ownerId: number): Promise<void> => {
   try {
     await prisma.store.delete({
-      where: { id },
+      where: {
+        id ,
+        ownerId ,
+      }
     })
 
   } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
+    if(err instanceof PrismaClientKnownRequestError){
+
+      throw new CustomError('You must be the owner to delete a store.', 401)
+    }
 }
 }
 

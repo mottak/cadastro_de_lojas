@@ -23,4 +23,13 @@ const authValidUser = (req: Request, res: Response, next: NextFunction) => {
   next()
 }
 
-export default { authUser, authValidUser }
+const authOwner = (req: Request, res: Response, next: NextFunction) => {
+  
+  const { authorization } = req.headers;
+  const payload = decodeToken(authorization as string)
+  
+  res.locals.user = payload
+  next()
+}
+
+export default { authUser, authValidUser, authOwner }

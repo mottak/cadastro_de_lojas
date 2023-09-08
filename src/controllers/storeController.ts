@@ -44,13 +44,12 @@ const edit = async (req: Request, res: Response) => {
 const remove = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = res.locals.user
-
   
   if (!user.id) {
     throw new CustomError('You must be a owner to delete this store.', 401)
   }
 
-   await storesService.remove(Number(id))
+  await storesService.remove(Number(id), user.id)
 
   return res.status(204).json()
   

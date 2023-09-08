@@ -9,7 +9,7 @@ const storesRouter = Router();
 storesRouter.get('/stores', auth.authUser, storeController.list);
 storesRouter.post('/store', auth.authUser, storeMiddleware.validNewStore, storeController.create);
 storesRouter.put('/store', auth.authUser, storeMiddleware.validEditStore, storeController.edit);
-storesRouter.delete('/store/:id', auth.authUser, storeController.remove);
+storesRouter.delete('/store/:id', auth.authUser, auth.authOwner, storeController.remove);
 
 
 export default storesRouter;
