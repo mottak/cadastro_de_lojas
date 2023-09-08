@@ -29,14 +29,11 @@ const edit = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = res.locals.user 
 
-  const ownerId = await userService.findOne(user.id);
-
-
   if (!user.id) {
     throw new CustomError('You must login to edit this store.', 401)
   }
 
-  const editedStore = await storesService.edit(Number(id), name, urlLogo, address)
+  const editedStore = await storesService.edit(Number(id), name, urlLogo, address, user.id)
   return res.status(200).json(editedStore)
 
 }

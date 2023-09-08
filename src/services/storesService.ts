@@ -56,12 +56,12 @@ const create = async (newStore: NewStore): Promise<Store> => {
 }
 
 
-const edit = async (id: number, name: string, urlLogo: string, address: string ):Promise<Store> => {
+const edit = async (id: number, name: string, urlLogo: string, address: string, ownerId: number ):Promise<Store | undefined> => {
   try {
 
     const result = await prisma.store.update
     ({
-      where: { id },
+      where: { id, ownerId },
       data: {
         name,
         urlLogo,
@@ -77,7 +77,10 @@ const edit = async (id: number, name: string, urlLogo: string, address: string )
     })
     return result
   } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
+    if(err instanceof PrismaClientKnownRequestError){
+
+      throw new CustomError('You must be the owner to delete a store.', 401)
+    }
   }
 
 }
