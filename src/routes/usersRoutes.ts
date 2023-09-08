@@ -12,7 +12,10 @@ usersRouter.post('/user', usermiddleware.validNewUser, userController.create);
 
 usersRouter.put('/user/:id', auth.authUser, auth.authValidUser, usermiddleware.idExists, usermiddleware.validEdit, userController.edit);
 
+usersRouter.delete('/user/many', auth.authUser, userController.removeMany);
+
 usersRouter.delete('/user/:id', auth.authUser, auth.authValidUser, userController.remove);
+
 
 
 export default usersRouter;

@@ -95,6 +95,11 @@ const remove = async (id: number): Promise<void> => {
 }
 }
 
+const removeMany = async (): Promise<void> => {
+
+  await prisma.user.deleteMany({})
+}
+
 const login = async (email: string): Promise<UserWithPassword> => {
   const user = await prisma.user.findUnique({ where: { email }})
   if(!user) {
@@ -106,5 +111,5 @@ const login = async (email: string): Promise<UserWithPassword> => {
 
 }
 
-export  { list, create, findOne, edit, remove, login };
+export  { list, create, findOne, edit, remove, removeMany, login };
 

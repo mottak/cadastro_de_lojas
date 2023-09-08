@@ -36,9 +36,16 @@ const remove = async (req: Request, res: Response) => {
   if(user.id !== Number(id)){
     throw new CustomError('You cannot delete another user.', 401)
   }
-  await userService.remove(parseInt(id))
+  await userService.remove(Number(id))
   return res.status(204).json()
 
 }
 
-export default  { list, create, edit, remove };
+const removeMany = async (req: Request, res: Response) => {
+
+  await userService.removeMany()
+  return res.status(204).json()
+
+}
+
+export default  { list, create, edit, remove, removeMany };
