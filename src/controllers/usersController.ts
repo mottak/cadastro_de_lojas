@@ -23,6 +23,11 @@ const create = async (req: Request, res: Response) => {
 const edit = async (req: Request, res: Response) => {
   const { id } = req.params
   const { name, email } = req.params
+  const user = res.locals.user
+
+  if(user.id !== Number(id)){
+    throw new CustomError('You cannot edit another user.', 401)
+  }
 
   const editedUser = await userService.edit(Number(id), name, email)
   return res.status(200).json(editedUser)  
