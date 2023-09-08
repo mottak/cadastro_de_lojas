@@ -79,6 +79,9 @@ describe('Edit user', () => {
       "name": "Maria das Graças",
       "email": "maria@email.com"
     }
+
+    res.locals = { user: newUser }
+    
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
 
