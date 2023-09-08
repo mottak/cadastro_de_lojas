@@ -75,7 +75,7 @@ describe('storeService', () => {
   
     it('Successfully remove store', async() => {
       stubInstance = prisma.store.delete = sinon.stub().resolves()
-      expect(await storeService.remove(1)).to.not.throw
+      expect(await storeService.remove(1, 1)).to.not.throw
   
     })
   
