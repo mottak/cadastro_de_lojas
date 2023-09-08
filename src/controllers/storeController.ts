@@ -51,6 +51,13 @@ const remove = async (req: Request, res: Response) => {
   return res.status(204).json()
   
 }
+const removeMany = async (req: Request, res: Response) => {
+
+  await storesService.removeMany()
+
+  return res.status(204).json({ message: 'All stores have been removed.' })
+  
+}
 
 
-export default  { list, create, edit, remove };
+export default  { list, create, edit, remove, removeMany };

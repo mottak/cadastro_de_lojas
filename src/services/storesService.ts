@@ -100,8 +100,15 @@ const remove = async (id: number, ownerId: number): Promise<void> => {
 
       throw new CustomError('You must be the owner to delete a store.', 401)
     }
+  }
 }
+
+const removeMany = async (): Promise<void> => {
+
+    await prisma.store.deleteMany({})
+
+ 
 }
 
 
-export { list,findOne, create, edit, remove };
+export { list,findOne, create, edit, remove, removeMany };

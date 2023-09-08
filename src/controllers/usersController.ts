@@ -44,7 +44,7 @@ const remove = async (req: Request, res: Response) => {
 const removeMany = async (req: Request, res: Response) => {
 
   await userService.removeMany()
-  return res.status(204).json()
+  return res.status(204).json({ message: 'All users have been removed.' })
 
 }
 
