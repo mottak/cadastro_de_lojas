@@ -101,22 +101,18 @@ describe('Remove user', () => {
     sinon.reset()
   })
   it('Successfully remove user', async() => {
-    sinon.stub(userService, 'remove').resolves()
+    sinon.stub(userService, 'removeMany').resolves()
   
     const req = {} as Request
     const res = {} as Response
-
-    req.params = { 
-      id: "1"
-    }
-    res.locals = { user: newUser }
     
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
       
-    await userController.remove(req, res);
+    await userController.removeMany(req, res);
 
     expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith({ message: 'All users have been removed.' });
   })
 
 })
