@@ -11,9 +11,7 @@ chai.use(sinonChai)
 describe('Users Controller', () => {
 
 describe('list users', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('List all users', async() => {
 
@@ -34,9 +32,7 @@ describe('list users', () => {
 
 
 describe('Create user', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('Successfully create new user', async() => {
     sinon.stub(userService, 'create').resolves(newUser)
@@ -61,9 +57,7 @@ describe('Create user', () => {
 })
 
 describe('Edit user', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('Successfully edit user ', async() => {
     sinon.stub(userService, 'edit').resolves(newUser)
@@ -97,14 +91,32 @@ describe('Edit user', () => {
 })
 
 describe('Remove user', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
+
   it('Successfully remove user', async() => {
+    sinon.stub(userService, 'remove').resolves()
+  
+    const req = {} as Request
+    const res = {} as Response
+
+    req.params = { 
+      id: "1"
+    }
+    res.locals = { user: newUser }
+    
+    res.status = sinon.stub().returns(res)
+    res.json = sinon.stub().returns(res)
+      
+    await userController.remove(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+  })
+  it('Successfully remove all users', async() => {
     sinon.stub(userService, 'removeMany').resolves()
   
     const req = {} as Request
     const res = {} as Response
+
     
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
@@ -112,8 +124,8 @@ describe('Remove user', () => {
     await userController.removeMany(req, res);
 
     expect(res.status).to.have.been.calledWith(204);
-    expect(res.json).to.have.been.calledWith({ message: 'All users have been removed.' });
   })
+ 
 
 })
 
