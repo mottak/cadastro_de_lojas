@@ -11,11 +11,9 @@ import { newUser, validLoginUser, validToken } from '../mocks/usersMocks';
 chai.use(sinonChai)
 
 describe('Stores Controller', () => {
-
+  beforeEach(() => { sinon.restore(); });
 describe('list stores', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('List all stores', async() => {
 
@@ -36,9 +34,7 @@ describe('list stores', () => {
 
 
 describe('Create store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('Successfully create new store', async() => {
     sinon.stub(storeService, 'create').resolves(newStore)
@@ -68,11 +64,9 @@ describe('Create store', () => {
 })
 
 describe('Edit store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
-  it('Successfully edit store name', async() => {
+  it('Successfully edit store', async() => {
     sinon.stub(storeService, 'edit').resolves(newStore)
   
     const req = {} as Request
@@ -100,14 +94,44 @@ describe('Edit store', () => {
     expect(res.json).to.have.been.calledWith(newStore)
     
   })
+  // it.only('Try to edit store without login', async() => {
+  //   // sinon.stub(storeService, 'edit').resolves(newStore)
+  
+  //   const req = {} as Request
+  //   const res = {} as Response
+
+  //   req.params = { 
+  //     id: "1"
+  //   }
+    
+  //   req.body = {
+  //     "name": "Nova loja do bairro",
+  //     "urlLogo": "https://www.prisma.io/nextjs",
+  //     "address": "Rua das Araras, 450 Bairro Planices",
+  //   }
+
+  //   res.locals.user = {
+  //     id: "",
+  //     name: "",
+  //     email: "",
+  //   }
+
+  //   res.status = sinon.stub().returns(res)
+  //   res.json = sinon.stub().returns(res)
+   
+      
+  //   await storeController.edit(req, res);
+
+  //   expect(res.status).to.have.been.calledWith(401)
+  //   // expect(res.json).to.have.been.calledWith(newStore)
+    
+  // })
 
 })
 
 describe('Remove store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
-  it('Successfully remove store', async() => {
+  beforeEach(() => { sinon.restore(); });
+  it('Successfully remove a store by id', async() => {
     sinon.stub(storeService, 'remove').resolves()
   
     const req = {} as Request
@@ -127,6 +151,21 @@ describe('Remove store', () => {
     await storeController.remove(req, res);
 
     expect(res.status).to.have.been.calledWith(204);
+  })
+  it('Successfully remove all stores', async() => {
+    sinon.stub(storeService, 'removeMany').resolves()
+  
+    const req = {} as Request
+    const res = {} as Response
+  
+    res.status = sinon.stub().returns(res)
+    res.json = sinon.stub().returns(res)
+
+      
+    await storeController.removeMany(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith({message: 'All stores have been removed.'});
   })
 
 })

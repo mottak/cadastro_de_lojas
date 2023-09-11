@@ -23,13 +23,14 @@ const create = async (req: Request, res: Response) => {
 
 }
 
-
 const edit = async (req: Request, res: Response) => {
   const { name, urlLogo, address } = req.body
   const { id } = req.params
-  const user = res.locals.user 
+  const user = res.locals.user
+  
+  console.log('res.locals.user', user)
 
-  if (!user.id) {
+  if (!user?.id) {
     throw new CustomError('You must login to edit this store.', 401)
   }
 
