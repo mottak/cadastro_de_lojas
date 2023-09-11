@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
-import * as storeService from '../../src/services/storesService';
-import * as userService from '../../src/services/userService';
-import storeController from '../../src/controllers/storeController'
+import * as storeService from '../../../src/services/storesService';
+import * as userService from '../../../src/services/userService';
+import storeController from '../../../src/controllers/storeController'
 import { allStores, newStore } from '../mocks/storesMocks';
 import { newUser, validLoginUser, validToken } from '../mocks/usersMocks';
 

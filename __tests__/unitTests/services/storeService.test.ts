@@ -1,9 +1,9 @@
-import * as storeService from '../../src/services/storesService';
+import * as storeService from '../../../src/services/storesService';
 import { assert, expect } from 'chai'
 import sinon from 'sinon'
-import crypto from '../../src/helper/cryptoPrassword'
+import crypto from '../../../src/helper/cryptoPrassword'
 
-import { prisma } from '../../src/services/storesService'
+import { prisma } from '../../../src/services/storesService'
 import { allStores, createNewStore, newStore, storeSearchTerm } from '../mocks/storesMocks';
 
 describe('storeService', () => {

@@ -1,10 +1,10 @@
-import * as userService from '../../src/services/userService';
+import * as userService from '../../../src/services/userService';
 import {  allUsers, createnewUser, loginBody, newUser, userSerachTerm, validLoginUser } from '../mocks/usersMocks';
 import { assert, expect } from 'chai'
 import sinon from 'sinon'
-import crypto from '../../src/helper/cryptoPrassword'
+import crypto from '../../../src/helper/cryptoPrassword'
 
-import { prisma } from '../../src/services/userService'
+import { prisma } from '../../../src/services/userService'
 
 describe('UserService', () => {
 

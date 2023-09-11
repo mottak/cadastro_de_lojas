@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
-import * as userService from '../../src/services/userService';
-import userController from '../../src/controllers/usersController'
+import * as userService from '../../../src/services/userService';
+import userController from '../../../src/controllers/usersController'
 import { allUsers, newUser, userSerachTerm } from '../mocks/usersMocks';
 
 chai.use(sinonChai)

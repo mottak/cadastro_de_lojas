@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
-import * as userService from '../../src/services/userService';
+import * as userService from '../../../src/services/userService';
 import { loginBody, validLoginUser, validToken } from '../mocks/usersMocks';
-import loginController from '../../src/controllers/loginController'
-import * as authToken from '../../src/validators/jwt/createToken'
+import loginController from '../../../src/controllers/loginController'
+import * as authToken from '../../../src/validators/jwt/createToken'
 
 chai.use(sinonChai)
 
