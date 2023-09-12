@@ -27,10 +27,6 @@ const edit = async (req: Request, res: Response) => {
   const { name, urlLogo, address } = req.body
   const { id } = req.params
   const user = res.locals.user
-  
-  if (!user?.id) {
-    throw new CustomError('You must login to edit this store.', 401)
-  }
 
   const editedStore = await storesService.edit(Number(id), name, urlLogo, address, user.id)
   return res.status(200).json(editedStore)
@@ -40,10 +36,6 @@ const edit = async (req: Request, res: Response) => {
 const remove = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = res.locals.user
-  
-  if (!user.id) {
-    throw new CustomError('You must be a owner to delete this store.', 401)
-  }
 
   await storesService.remove(Number(id), user.id)
 

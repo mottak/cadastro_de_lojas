@@ -3,10 +3,9 @@ import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
 import * as storeService from '../../../src/services/storesService';
-import * as userService from '../../../src/services/userService';
 import storeController from '../../../src/controllers/storeController'
 import { allStores, newStore } from '../mocks/storesMocks';
-import { newUser, validLoginUser, validToken } from '../mocks/usersMocks';
+import { newUser } from '../mocks/usersMocks';
 
 chai.use(sinonChai)
 
@@ -94,38 +93,6 @@ describe('Edit store', () => {
     expect(res.json).to.have.been.calledWith(newStore)
     
   })
-  // it.only('Try to edit store without login', async() => {
-  //   // sinon.stub(storeService, 'edit').resolves(newStore)
-  
-  //   const req = {} as Request
-  //   const res = {} as Response
-
-  //   req.params = { 
-  //     id: "1"
-  //   }
-    
-  //   req.body = {
-  //     "name": "Nova loja do bairro",
-  //     "urlLogo": "https://www.prisma.io/nextjs",
-  //     "address": "Rua das Araras, 450 Bairro Planices",
-  //   }
-
-  //   res.locals.user = {
-  //     id: "",
-  //     name: "",
-  //     email: "",
-  //   }
-
-  //   res.status = sinon.stub().returns(res)
-  //   res.json = sinon.stub().returns(res)
-   
-      
-  //   await storeController.edit(req, res);
-
-  //   expect(res.status).to.have.been.calledWith(401)
-  //   // expect(res.json).to.have.been.calledWith(newStore)
-    
-  // })
 
 })
 

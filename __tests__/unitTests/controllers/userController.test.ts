@@ -86,6 +86,7 @@ describe('Edit user', () => {
     expect(res.json).to.have.been.calledWith(newUser)
     
   })
+  
   it('Try to edit a diferent user ', async() => {
   
     const req = {} as Request
