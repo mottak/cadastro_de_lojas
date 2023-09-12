@@ -79,7 +79,7 @@ const edit = async (id: number, name: string, urlLogo: string, address: string, 
   } catch (err) {
     if(err instanceof PrismaClientKnownRequestError){
 
-      throw new CustomError('You must be the owner to delete a store.', 401)
+      throw new CustomError('You must be the owner to edit a store.', 401)
     }
   }
 
@@ -105,7 +105,7 @@ const remove = async (id: number, ownerId: number): Promise<void> => {
 
 const removeMany = async (): Promise<void> => {
 
-    await prisma.store.deleteMany({})
+  await prisma.store.deleteMany({})
 
  
 }

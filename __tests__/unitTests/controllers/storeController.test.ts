@@ -119,6 +119,7 @@ describe('Remove store', () => {
 
     expect(res.status).to.have.been.calledWith(204);
   })
+  
   it('Successfully remove all stores', async() => {
     sinon.stub(storeService, 'removeMany').resolves()
   
