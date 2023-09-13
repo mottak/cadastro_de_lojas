@@ -9,7 +9,6 @@ chai.use(chaiAsPromised);
 
 describe('storeService', () => {
 
-  let stubInstance: sinon.SinonStub
   describe('list stores', () => {
 
     beforeEach(() => { sinon.restore(); });
@@ -24,7 +23,7 @@ describe('storeService', () => {
 
     it('Successfully list users filtered by searchTerm', async() => {
     
-      stubInstance = prisma.store.findMany = sinon.stub().resolves(storeSearchTerm)
+      prisma.store.findMany = sinon.stub().resolves(storeSearchTerm)
      
       const result = await storeService.list(1, 20, 'ria')
       expect(result).to.deep.equal(storeSearchTerm)
@@ -35,7 +34,7 @@ describe('storeService', () => {
 
     it('Successfully list store by id', async() => {
     
-      stubInstance = prisma.store.findUnique = sinon.stub().resolves(allStores[0])
+      prisma.store.findUnique = sinon.stub().resolves(allStores[0])
      
       const result = await storeService.findOne(1)
       expect(result).to.deep.equal(allStores[0])
