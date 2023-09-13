@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as storesService from '../services/storesService'
 import * as userService from '../services/userService'
+import { CustomError } from '../Error/CustomError';
 
 const list = async (req: Request, res: Response) => {
   const page = Number(req?.query?.page) || 1
@@ -14,37 +15,40 @@ const list = async (req: Request, res: Response) => {
 }
 
 const create = async (req: Request, res: Response) => {
+  const { name, urlLogo, address } = req.body
+  const user = res.locals.user
 
-  const ownerIdExists = await userService.findOne(req.body.ownerId);
-
-  if (ownerIdExists) {
-    const newStore = await storesService.create(req.body)
-    return res.status(201).json(newStore)
-
-  }
-
-  return res.status(404).json({ message: 'Inform a valid owner id.'})
-
+  const newStore = await storesService.create({name, urlLogo, address, ownerId: user.id})
+  return res.status(201).json(newStore)
 
 }
 
 const edit = async (req: Request, res: Response) => {
   const { name, urlLogo, address } = req.body
   const { id } = req.params
+  const user = res.locals.user
 
-  const editedStore = await storesService.edit(parseInt(id), name, urlLogo, address)
+  const editedStore = await storesService.edit(Number(id), name, urlLogo, address, user.id)
   return res.status(200).json(editedStore)
 
 }
 
 const remove = async (req: Request, res: Response) => {
   const { id } = req.params
+  const user = res.locals.user
 
-   await storesService.remove(parseInt(id))
+  await storesService.remove(Number(id), user.id)
 
   return res.status(204).json()
   
 }
+const removeMany = async (req: Request, res: Response) => {
+
+  await storesService.removeMany()
+
+  return res.status(204).json({ message: 'All stores have been removed.' })
+  
+}
 
 
-export default  { list, create, edit, remove };
+export default  { list, create, edit, remove, removeMany };

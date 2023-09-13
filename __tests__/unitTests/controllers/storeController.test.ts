@@ -2,18 +2,17 @@ import { Request, Response } from 'express';
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai' 
-import * as storeService from '../../src/services/storesService';
-import storeController from '../../src/controllers/storeController'
+import * as storeService from '../../../src/services/storesService';
+import storeController from '../../../src/controllers/storeController'
 import { allStores, newStore } from '../mocks/storesMocks';
+import { newUser } from '../mocks/usersMocks';
 
 chai.use(sinonChai)
 
 describe('Stores Controller', () => {
-
+  beforeEach(() => { sinon.restore(); });
 describe('list stores', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('List all stores', async() => {
 
@@ -30,43 +29,29 @@ describe('list stores', () => {
     expect(res.json).to.have.been.calledWith(allStores)
   })
 
-  // it('List all stores', async() => {
-
-  //   sinon.stub(storeService, 'list').resolves(allStores)
-  
-  //   const req = {} as Request
-  //   const res = {} as Response
-  
-  //   res.status = sinon.stub().returns(res)
-  //   res.json = sinon.stub().returns(res)
-
-  //   await storeController.list(req, res)
-  //   expect(res.status).to.have.been.calledWith(200)
-  //   expect(res.json).to.have.been.calledWith(allStores)
-  // })
-
   })
 
 
 describe('Create store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
   it('Successfully create new store', async() => {
     sinon.stub(storeService, 'create').resolves(newStore)
   
     const req = {} as Request
     const res = {} as Response
-  
+    res.locals = { user: newUser }
+    
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
+
+    res.locals = { user: newUser }
 
     req.body = {
       "name": "Nova loja do bairro",
       "urlLogo": "https://www.prisma.io/nextjs",
       "address": "Rua das Araras, 450 Bairro Planices",
-      "ownerId": 2
+
     }
       
     await storeController.create(req, res);
@@ -78,11 +63,9 @@ describe('Create store', () => {
 })
 
 describe('Edit store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
+  beforeEach(() => { sinon.restore(); });
 
-  it('Successfully edit store name', async() => {
+  it('Successfully edit store', async() => {
     sinon.stub(storeService, 'edit').resolves(newStore)
   
     const req = {} as Request
@@ -91,12 +74,15 @@ describe('Edit store', () => {
     req.params = { 
       id: "1"
     }
-  
+    
     req.body = {
       "name": "Nova loja do bairro",
       "urlLogo": "https://www.prisma.io/nextjs",
       "address": "Rua das Araras, 450 Bairro Planices",
     }
+
+    res.locals = { user: newUser }
+
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
 
@@ -111,18 +97,19 @@ describe('Edit store', () => {
 })
 
 describe('Remove store', () => {
-  afterEach(() => {
-    sinon.reset()
-  })
-  it('Successfully remove store', async() => {
+  beforeEach(() => { sinon.restore(); });
+  it('Successfully remove a store by id', async() => {
     sinon.stub(storeService, 'remove').resolves()
   
     const req = {} as Request
     const res = {} as Response
 
+
     req.params = { 
       id: "1"
     }
+
+    res.locals = { user: newUser }
   
     res.status = sinon.stub().returns(res)
     res.json = sinon.stub().returns(res)
@@ -131,6 +118,22 @@ describe('Remove store', () => {
     await storeController.remove(req, res);
 
     expect(res.status).to.have.been.calledWith(204);
+  })
+  
+  it('Successfully remove all stores', async() => {
+    sinon.stub(storeService, 'removeMany').resolves()
+  
+    const req = {} as Request
+    const res = {} as Response
+  
+    res.status = sinon.stub().returns(res)
+    res.json = sinon.stub().returns(res)
+
+      
+    await storeController.removeMany(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith({message: 'All stores have been removed.'});
   })
 
 })

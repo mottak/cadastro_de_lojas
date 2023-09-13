@@ -13,33 +13,33 @@ A API permite a criação, leitura, atualização e exclusão de usuários, alé
 
 Clone o repositório:
 
- ```bash
- git clone git@github.com:mottak/cadastro_de_lojas.git
- cd cadastro_de_lojas
- ```
+```bash
+  git clone git@github.com:mottak/cadastro_de_lojas.git
+  cd cadastro_de_lojas
+```
 
 Instale as dependencias:
 
 ```bash
- npm install
+  npm install 
 ```
 
 Suba o banco de dados postgress usando docker-compose:
 
 ```bash
-docker-compose up -d
+  docker-compose up -d
 ```
 
 Gere as migrates do prisma:
 
 ```bash
-npm run db:migrate
+  npm run db:migrate
 ```
 
 Popule o banco de dados com as seeds disponíveis no projeto:
 
 ```bash
-npm run db:seed
+  npm run db:seed
 ```
 
 ### Testes
@@ -48,17 +48,26 @@ O projeto possui testes unitários que foram construídos com mocha e chai.
 Para executar os testes, rode o script:
 
 ```bash
-npm test
+  npm test
 ```
 
 Para verificar a cobertura de testes:
 
 ```bash
-npm run test:coverage
+  npm run test:coverage
 ```
 
+## Documentação com swagger
 
+Para visualizar de forma interativa, esse projeto conta com a documentação feita com swagger, para visualiza-la basta rodar o script:
 
+```bash
+  npm run start-gendoc
+```
+
+Após executar o script, abra a url: **http://localhost:3000/api-docs/**
+
+Esse readme também conta com a documetação desta API, que pode ser vista nos tópicos abaixo:
 
 
 ## Autenticação
@@ -299,6 +308,36 @@ Todas as rotas, exceto a rota de login e listar usuários, requerem autenticaç�
     }
     ```
 
+### Exclusão em massa de Usuários
+
+- **URL:** `/user/many`
+- **Método:** DELETE
+- **Parâmetros de URL:**
+
+- **Autenticação Necessária:** Sim (Token JWT)
+
+- **Resposta de Sucesso:**
+
+  - **Código de Status:** 204 No Content
+  - **Corpo da Resposta:**
+
+    ```json
+  {
+    "mensagem": "All users have been removed."
+  }
+  ```
+
+- **Resposta de Erro:**
+
+  - **Código de Status:** 400 Bad Request
+  - **Corpo da Resposta:**
+
+     ```json
+    {
+      "mensagem": "You need to be logged in."
+    }
+    ```
+
 ## Recursos de Lojas
 
 
@@ -400,4 +439,34 @@ Corpo da Resposta:
 Resposta de Sucesso:
 
 Código de Status: 204 No Content
+
+### Excluisão em massa de Lojas
+
+- **URL:** `/store/many`
+- **Método:** DELETE
+- **Parâmetros de URL:**
+
+- **Autenticação Necessária:** Sim (Token JWT)
+
+- **Resposta de Sucesso:**
+
+  - **Código de Status:** 204 No Content
+  - **Corpo da Resposta:**
+
+    ```json
+  {
+    "mensagem": "All stores have been removed."
+  }
+  ```
+
+- **Resposta de Erro:**
+
+  - **Código de Status:** 400 Bad Request
+  - **Corpo da Resposta:**
+
+     ```json
+    {
+      "mensagem": "You need to be logged in."
+    }
+    
 

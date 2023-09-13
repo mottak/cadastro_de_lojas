@@ -64,11 +64,23 @@ export const validLoginUser = {
   password: '$2b$10$hHYKQW.ioMR9Y/UKw7lNBu27FtiXQdSkzl9BEE7kp.jYl14OPcR0i'
 }
 
+export const invalidLoginUser = {
+  id: 1,
+  email: 'maria@email.com',
+  name: 'Maria',
+  password: '$2b$10$hHYjku.ioMR9Y/UKw7lNBu27FtiXQdSkzl9BEE7kp.jYl14OPcR0i'
+}
+
 export const loginBody = {
 
   email: 'maria@email.com',
-
   password: '123456'
+}
+
+export const loginBodyInvalidPassword = {
+
+  email: 'maria@email.com',
+  password: '654321'
 }
 
 export const userSerachTerm = [

@@ -90,8 +90,14 @@ const remove = async (id: number): Promise<void> => {
     })
 
   } catch (err) {
+    console.log(err)
     throw new CustomError('Provid a valid id.', 404)
 }
+}
+
+const removeMany = async (): Promise<void> => {
+
+  await prisma.user.deleteMany({})
 }
 
 const login = async (email: string): Promise<UserWithPassword> => {
@@ -105,5 +111,5 @@ const login = async (email: string): Promise<UserWithPassword> => {
 
 }
 
-export  { list, create, findOne, edit, remove, login };
+export  { list, create, findOne, edit, remove, removeMany, login };
 

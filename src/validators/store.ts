@@ -11,7 +11,6 @@ export const storeSchema = Joi.object({
   address: Joi.string()
     .min(6)
     .required(),
-  ownerId: Joi.number().integer().required()
 })
 
 export const editStoreSchema = Joi.object({

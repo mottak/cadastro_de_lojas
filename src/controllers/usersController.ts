@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as userService from '../services/userService'
+import { CustomError } from '../Error/CustomError';
 
 const list = async (req: Request, res: Response) => {
   
@@ -22,17 +23,34 @@ const create = async (req: Request, res: Response) => {
 const edit = async (req: Request, res: Response) => {
   const { id } = req.params
   const { name, email } = req.params
+  const user = res.locals.user
 
-  const editedUser = await userService.edit(parseInt(id), name, email)
+  if(user.id !== Number(id)){
+    throw new CustomError('You cannot edit another user.', 401)
+  }
+
+  const editedUser = await userService.edit(Number(id), name, email)
   return res.status(200).json(editedUser)  
 
 }
 
 const remove = async (req: Request, res: Response) => {
   const { id } = req.params
-  await userService.remove(parseInt(id))
+  const user = res.locals.user
+
+  if(user.id !== Number(id)){
+    throw new CustomError('You cannot delete another user.', 401)
+  }
+  await userService.remove(Number(id))
   return res.status(204).json()
 
 }
 
-export default  { list, create, edit, remove };
+const removeMany = async (req: Request, res: Response) => {
+
+  await userService.removeMany()
+  return res.status(204).json({ message: 'All users have been removed.' })
+
+}
+
+export default  { list, create, edit, remove, removeMany };

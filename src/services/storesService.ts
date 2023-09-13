@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { Store, NewStore } from '../domain/store'
 import { CustomError } from '../Error/CustomError'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 export const prisma = new PrismaClient()
 
@@ -8,9 +9,7 @@ const list = async (page: number, limit: number, search: string) => {
   const validPage = page > 0 ? page - 1 : 1
   const validLimit = limit > 0 ? limit : 20
   const validSearch =  '%' + search.replace(/\W/g, '') 
-  console.log({
-    limit, page, validPage, validLimit, validSearch
-  })
+
   const stores = await prisma.store.findMany({
     where: {
       OR:
@@ -31,21 +30,6 @@ const findOne = async (id: number): Promise<Store | null> => {
   const store = await prisma.store.findUnique({ where: { id }})
   return store
 }
-
-// const filter = async (id: number, email: string, name: string, limit: number = 20, page: number = 1) => {
-
-//   const stores = await prisma.store.findMany({
-//     where: {
-//       id,
-//       name,
-//     },
-//     skip: (page -1) * limit,
-//     take: limit,
-//   })
-//   return stores;
-  
-// }
-
 
 const create = async (newStore: NewStore): Promise<Store> => {
   const  { name, urlLogo, address, ownerId } = newStore
@@ -72,12 +56,12 @@ const create = async (newStore: NewStore): Promise<Store> => {
 }
 
 
-const edit = async (id: number, name: string, urlLogo: string, address: string ):Promise<Store> => {
+const edit = async (id: number, name: string, urlLogo: string, address: string, ownerId: number ):Promise<Store | undefined> => {
   try {
 
     const result = await prisma.store.update
     ({
-      where: { id },
+      where: { id, ownerId },
       data: {
         name,
         urlLogo,
@@ -93,22 +77,38 @@ const edit = async (id: number, name: string, urlLogo: string, address: string )
     })
     return result
   } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
+    if(err instanceof PrismaClientKnownRequestError){
+
+      throw new CustomError('You must be the owner to edit a store.', 401)
+    }
   }
 
 }
 
 
-const remove = async (id: number): Promise<void> => {
+const remove = async (id: number, ownerId: number): Promise<void> => {
   try {
     await prisma.store.delete({
-      where: { id },
+      where: {
+        id ,
+        ownerId ,
+      }
     })
 
   } catch (err) {
-    throw new CustomError('Provid a valid id.', 404)
+    if(err instanceof PrismaClientKnownRequestError){
+
+      throw new CustomError('You must be the owner to delete a store.', 401)
+    }
+  }
 }
+
+const removeMany = async (): Promise<void> => {
+
+  await prisma.store.deleteMany({})
+
+ 
 }
 
 
-export { list,findOne, create, edit, remove };
+export { list,findOne, create, edit, remove, removeMany };
